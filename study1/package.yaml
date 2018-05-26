@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A simple Hello World Serverless project
+Resources:
+  HelloWorld:
+    Properties:
+      CodeUri: s3://gakussamtest/c81dae283b3152479c56a2d73828fd8c
+      Events:
+        Api:
+          Properties:
+            Method: any
+            Path: /hello
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+  HelloWorld2:
+    Properties:
+      CodeUri: s3://gakussamtest/690c57529cb68dafa96587652301b1b9
+      Events:
+        Api:
+          Properties:
+            Method: any
+            Path: /hello2
+          Type: Api
+      Handler: index.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

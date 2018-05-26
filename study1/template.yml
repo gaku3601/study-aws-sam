@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+ 
+Description: A simple Hello World Serverless project
+Resources:
+  HelloWorld: # <-- 関数の論理ID
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      CodeUri: src/handlers/sample-func1
+      Handler: index.handler
+      Events:
+          Api:
+            Type: Api
+            Properties:
+              Path: /hello
+              Method: any
+  HelloWorld2: # <-- 関数の論理ID
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      CodeUri: src/handlers/sample-func2
+      Handler: index.handler
+      Events:
+          Api:
+            Type: Api
+            Properties:
+              Path: /hello2
+              Method: any

@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A simple Hello World Serverless project
+Resources:
+  Api:
+    Properties:
+      DefinitionBody:
+        info:
+          title:
+            Ref: AWS::StackName
+        paths:
+          /hello:
+            get:
+              responses: {}
+              security:
+              - cognitoUserPool: []
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${HelloWorld.Arn}/invocations
+        securityDefinitions:
+          cognitoUserPool:
+            in: header
+            name: Authorization
+            type: apiKey
+            x-amazon-apigateway-authorizer:
+              providerARNs:
+              - arn:aws:cognito-idp:ap-northeast-1:982976011432:userpool/ap-northeast-1_FcptEeIZt
+              type: cognito_user_pools
+            x-amazon-apigateway-authtype: cognito_user_pools
+        swagger: 2.0
+      StageName: stage
+    Type: AWS::Serverless::Api
+  HelloWorld:
+    Properties:
+      CodeUri: s3://gakussamtest/72bc62d3622d40ca7bb1ddea7052f979
+      Handler: index.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
